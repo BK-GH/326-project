@@ -2,7 +2,7 @@
 Project: Assignment Tracker
 Brook Goitom | Emmanuel Sitaniapessy | Jenny Dang | Nicholas Wang
 INST 326
-Professor Cruz
+Professor Cruz hello testing
 """
 
 class Assignment:
