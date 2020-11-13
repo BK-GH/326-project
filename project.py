@@ -17,6 +17,8 @@ class Assignment:
         pass
     
     def weight():
+        """ This function gets the weight of the assignment from the csv file.
+        """
         pass
 
 
@@ -35,10 +37,14 @@ class Status:
         pass
     
     def estimate():
+        """This function will get the status of the file and estimate how much time needs to be spend on the assignment.
+        """
         pass
 
 
 def main():
+    """This function will print the attributes for the assignment and status class. This class will also offer suggestions based on these attributes
+    """
     pass
 
 
