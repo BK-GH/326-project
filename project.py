@@ -5,45 +5,71 @@ INST 326
 Professor Cruz
 """
 
+def course_name(line):
+    """
+    Finds out the name of the course of the assignment.
+    
+    Args:
+        line(str): line from the file.
+        
+    Return:
+        name(str): Returns name of the course for the assignment.
+    """
+
+def assignment_name(line):
+    """
+    Gets the name of the assignment.
+    
+    Args:
+        line(str): line from the file
+        
+    Return:
+        assignment_name(str): Name of the assignment.
+    """
+
 class Assignment:
+    
+    def __init__(self, path):
+        """
+        Initializes the Assignment attributes.
+        
+        Args:
+            path(str): Path to the csv file.
+            
+        Return:
+            None
+        """
     
     def due_date():
         pass
     
-    def name():
-        pass
-    
-    def course_name():
-        pass
-    
     def weight():
-        """ This function gets the weight of the assignment from the csv file.
-        """
         pass
 
 
 class Status:
     
+    def __init__(self):
+        """
+        Initializes the attributes of the status class.
+        """
+    
     def days_left():
-        pass
-    
-    def reminder():
-        pass
-    
-    def countdown():
+        """
+        Calculates the days left to complete the assignment.
+        """
         pass
     
     def organize_list():
         pass
     
     def estimate():
-        """This function will get the status of the file and estimate how much time needs to be spend on the assignment.
-        """
         pass
 
 
 def main():
-    """This function will print the attributes for the assignment and status class. This class will also offer suggestions based on these attributes
+    """
+    Retrieves and prints the status the assignment.
     """
     pass
 
