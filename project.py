@@ -70,7 +70,10 @@ class Status:
         pass
     
     def estimate():
-        """Estimates the time needed for the assignment and how difficult the assignment is
+        """Estimates the time needed for the assignment using the weight
+        
+        Returns:
+            estimate(int): estimate of how much time needed
         
         """
         pass
