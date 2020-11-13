@@ -43,7 +43,13 @@ class Assignment:
     def due_date():
         pass
     
-    def weight():
+    def weight(self):
+        """ Initializes the weight of assignment
+        
+        Args:
+            self: reference to the object
+            
+        """
         pass
 
 
@@ -64,6 +70,9 @@ class Status:
         pass
     
     def estimate():
+        """Estimates the time needed for the assignment and how difficult the assignment is
+        
+        """
         pass
 
 
