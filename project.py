@@ -5,6 +5,18 @@ INST 326
 Professor Cruz
 """
 
+#import modules
+import pandas as pd
+
+# Takes the file's folder 
+path = r"assignmentdatabase.csv"
+   
+# read the CSV file 
+df = pd.read_csv(path) 
+   
+# print the first five rows 
+print(df)
+
 def course_name(line):
     """
     Finds out the name of the course of the assignment.
