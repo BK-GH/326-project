@@ -91,9 +91,11 @@ class Status():
         """
         Calculates the days left to complete the assignment.
         """
+        #self.df = pd.DataFrame(columns=["Due Date"])
+        #today = pd.to_datetime("now")
+        today = datetime.now()
         
-        today = pd.to_datetime("now")
-        self.df["Due Date"] = pd.to_datatime(self.df["Due Date"])
+        #self.df["Due Date"] = pd.to_datatime(self.df["Due Date"])
     
         
         #date_format = today.strftime("%m/%d/%y %H:%M:%S")
@@ -105,7 +107,7 @@ class Status():
         print(self.df["Due Date"])
         
         #calculate days left 
-        self.df["days left"] = today - self.df["Due Date"]
+        #self.df["days left"] = today - self.df["Due Date"]
     
 
     
@@ -154,6 +156,8 @@ def main():
         print (status_object.df["Due Date" < datetime.now()])
             
     #create instance of status and print to print out days remaining and estimate
+    
+    
     
 
 if __name__ =="__main__":
