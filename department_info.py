@@ -107,15 +107,19 @@ def main(class_list):
         class_list(list): list of selected classes
     """
     #Prints out department information for selected classes
-    print("Department Info: \n")
+    #print("Department Info: \n")
     #Loop through each class of the selected classes
+    alist = []
     for class_name in class_list:
         #Create a instance of DepartmentInfo with the class
         department_object = DepartmentInfo(class_name)
         #Call the get_department_info function and store it in a variable
         department_info = department_object.get_department_info()
         #Print out department info
-        print(department_info + "\n")
+        #print(department_info + "\n")
+        alist.append(department_info)
+    
+    return alist
 
 if __name__ =="__main__":
     class_list = ["INST 301", "INST 311", "INST 314", "INST 326", "INST 335"]
