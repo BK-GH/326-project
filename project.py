@@ -9,7 +9,7 @@ Professor Cruz
 import pandas as pd
 from datetime import datetime
 
-
+'''
 class Assignment:
     """
     A class for reading through assignments
@@ -27,7 +27,7 @@ class Assignment:
         
         self.assignment = []
         
-    '''
+    
     def get_course_name(self):
         """
         Gets the name of the course.
@@ -96,20 +96,32 @@ class Status():
         today = datetime.now()
         
         #self.df["Due Date"] = pd.to_datatime(self.df["Due Date"])
+        
+        date_format = datetime.strftime(today, "%Y-%m-%d")
     
-        
-        #date_format = today.strftime("%m/%d/%y %H:%M:%S")
-        
         print(today)
+        print(type(date_format))
         
         #print(f"today is {date_format}")
         
         print(self.df["Due Date"])
         
-        #calculate days left 
-        #self.df["days left"] = today - self.df["Due Date"]
-    
+        datelist = []
+        
+        for item in self.df["Due Date"]:
+            date = datetime.strptime(item, "%Y-%m-%d")
+            datelist.append(date)
+            #self.df["new date"] = self.df["Due Date"]
 
+        self.df["new date"] = datelist
+        #date = datetime.parse(self.df["Due Date"]);
+        
+        #calculate days left 
+        self.df["days left"] = self.df["new date"] - date_format
+        
+    
+        print(self.df["days left"])
+        
     
     def importance(self):
         """
@@ -121,26 +133,40 @@ class Status():
        
         #df_cond = self.df[["Weight", "Type"]]
         
-        count = 0
-        while count < len(self.df["Type"]):
-            if self.df["Type"] == "Discussion":
-                self.type_weight =  1
-            elif self.df["Type"] == "Homework":
-                self.type_weight = 2
-            elif self.df["Type"] == "Written":
-                self.type_weight = 3
-            elif self.df["Type"] == "Project":
-                self.type_weight = 4
-            elif self.df["Type"] == "Exam":
-                self.df["type_weight"] = 5
-            else:
-                self.df["type_weight"] = 6
+        typeweightlist = []
         
-        self.df["difficulty"] = self.df["Weight"] * self.df["type_weight"]
+        count = 0
+        while count < (len(self.df["Type"])):
+            if self.df["Type"][count] == "Discussion":
+                typeweight =  1
+            elif self.df["Type"][count] == "Homework":
+                typeweight = 2
+            elif self.df["Type"][count] == "Written":
+                typeweight = 3
+            elif self.df["Type"][count] == "Project":
+                typeweight = 4
+            elif self.df["Type"][count] == "Exam":
+                typeweight = 5
+            else:
+                typeweight = 6
+            typeweightlist.append(typeweight)
+            count+= 1
+        
+        self.df["type_weight"] = typeweightlist
+        
+        difficultylist = []
+        
+        count2 = 0
+        while count2 < (len(self.df["type_weight"]-1)):
+            difficulty = self.df["Weight"][count2] * self.df["type_weight"][count2]
+            difficultylist.append(round(difficulty))
+            count2+= 1
+        self.df["difficulty"] = difficultylist
         
         difficulty = self.df["difficulty"] #df.loc[days_left() >= 0, ["difficulty"]]
         
-        print(f"Level of difficulty: {difficulty}")
+        #for difficulty in self.df["difficulty"]:
+            #print(f"Level of difficulty: {difficulty}")
 
 
 def main():
@@ -152,11 +178,15 @@ def main():
     
     status_object = Status()
         
-    if status_object.days_left() >= 0:
-        print (status_object.df["Due Date" < datetime.now()])
+    status_object.days_left()
+    
+    status_object.importance()
+    #    print (status_object.df["Due Date" < datetime.now()])
             
     #create instance of status and print to print out days remaining and estimate
     
+    df_cond = status_object.df[["Subject", "Assignment", "Time Due", "Due Date", "Weight", "days left", "difficulty"]]
+    print(df_cond)
     
     
 
