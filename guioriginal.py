@@ -10,13 +10,14 @@ import department_info
 
 LARGE_FONT= ("Verdana", 18)
 
-alistofclasses = []
+#alistofclasses = []
 
 class Main(tk.Tk):
     
     def __init__(self, *args, **kwargs):
         
         tk.Tk.__init__(self, *args, **kwargs)
+        self.alistofclasses = []
         #now starts tk_example2.py
         container = tk.Frame(self)
 
@@ -106,7 +107,7 @@ class Welcomewindow(tk.Frame):
         self.classes()
         
         button = tk.Button(self, text="Department Info", #sends user to department info page
-                            command=lambda: [controller.show_frame(Departmentinfo), self.getdepartmentinfo(self.enrolledlistvar)])
+                            command=lambda: [controller.show_frame(Departmentinfo), self.getdepartmentinfo(self.enrolledlistvar, controller)])
         button.place(x = 320, y = 500, relwidth = 0.2, relheight = 0.05)
 
         button2 = tk.Button(self, text="Get Schedule", #sends user to get schedule page
@@ -180,7 +181,7 @@ class Welcomewindow(tk.Frame):
         
     
     
-    def getdepartmentinfo(self, eclist):
+    def getdepartmentinfo(self, eclist, controller):
         
         #for i in eclist.get(): 
             #print(f"INST {int}")
@@ -191,7 +192,7 @@ class Welcomewindow(tk.Frame):
         alist = eclist.get().split()
         #print(alist)
         for element in alist:
-            alistofclasses.append(f"INST {remove_punctuation(element)}")
+            controller.alistofclasses.append(f"INST {remove_punctuation(element)}")
         #print(alistofclasses)
 
 
@@ -217,11 +218,11 @@ class Departmentinfo(tk.Frame):
                             command=lambda: controller.show_frame(Getschedule))
         button2.pack()
         
-        theclasses = department_info.main(i for i in alistofclasses)
+        theclasses = department_info.main(i for i in controller.alistofclasses)
         print(theclasses)
         
         button3 = tk.Button(self, text="See department info",
-                            command=lambda: self.call_classes(alistofclasses))
+                            command=lambda: self.call_classes(controller.alistofclasses))
         button3.pack()
         
     def call_classes(self, listofclasses):
