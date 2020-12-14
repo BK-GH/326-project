@@ -49,6 +49,13 @@ class Main(tk.Tk):
         self.show_frame(Welcomewindow)
         
     def show_frame(self, cont):
+        """
+        Method to show frame of .
+        
+        Args:
+            args(): passes varible to function
+            kwargs(): keyword arguments that passes varible to function
+        """
         
         frame = self.frames[cont]
         frame.tkraise()   
