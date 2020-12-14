@@ -13,8 +13,21 @@ LARGE_FONT= ("Verdana", 18)
 #alistofclasses = []
 
 class Main(tk.Tk):
+    """
+    A class for opening main window 
+
+    Attributes:
+        tk.Tk(): passes in the root of Tkinter
+    """
     
     def __init__(self, *args, **kwargs):
+        """
+        Initializes Welcomewindow class.
+        
+        Args:
+            args(): passes varible to function
+            kwargs(): keyword arguments that passes varible to function
+        """
         
         tk.Tk.__init__(self, *args, **kwargs)
         self.alistofclasses = []
@@ -36,6 +49,7 @@ class Main(tk.Tk):
         self.show_frame(Welcomewindow)
         
     def show_frame(self, cont):
+        
         frame = self.frames[cont]
         frame.tkraise()   
 
@@ -59,7 +73,15 @@ def remove_punctuation(word):
 
 class Welcomewindow(tk.Frame):
     
+    
     def __init__(self, parent, controller):
+        """
+        Initializes Welcomewindow class.
+        
+        Args:
+            args(): passes varible to function
+            kwargs(): keyword arguments that passes varible to function
+        """
         
         tk.Frame.__init__(self,parent) #start of tk_example2.py code
         
@@ -117,12 +139,31 @@ class Welcomewindow(tk.Frame):
 
 
     def classes(self):
+        """
+        A method to set class values to list
+
+        Args:
+            classlistvar(list): list of classes
+            enrolledlistvar(list): empty list to pass in list of classes
+        """
         
         self.classlistvar.set(value = (301,311,314,326,335)) #    you can also use value = ['A', 'B', 'C']
         self.enrolledlistvar.set(value = ())
     
 
     def get_classes(self, only_one_item=False):
+        """ 
+        A method that gets a class from the enrolled list.
+        
+        Args:
+            only_one_item(bool): set to false, can only select one item
+
+        Side effects:
+            Alters enrolled list variable
+            
+        Returns:
+            None: if there is no selection
+        """
         
         if self.classlist.curselection() == ():
             return
@@ -149,10 +190,17 @@ class Welcomewindow(tk.Frame):
 
 
     def delete_classes(self, only_one_item=False):
-        """ This method deletes a class from the enrolled.
+        """ 
+        A method that deletes a class from the enrolled list.
+        
+        Args:
+            only_one_item(bool): set to false, can only select one item
 
         Side effects:
-            Alters enrolled list var.
+            Alters enrolled list variable
+            
+        Returns:
+            None: if there is no selection
         """
         
         if self.enrolledlist.curselection() == ():
@@ -198,8 +246,18 @@ class Welcomewindow(tk.Frame):
 
 
 class Departmentinfo(tk.Frame):
+    """
+    A class for opening the department info page 
+    """
     
     def __init__(self, parent, controller):
+        """
+        Initializes Departmentinfo class.
+        
+        Args:
+            args(): passes varible to function
+            kwargs(): keyword arguments that passes varible to function
+        """
         
         tk.Frame.__init__(self, parent)
         #   frame of the title label
