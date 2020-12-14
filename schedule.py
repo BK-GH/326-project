@@ -8,78 +8,16 @@ Professor Cruz
 #import modules
 import pandas as pd
 from datetime import datetime
-
-'''
-class Assignment:
-    """
-    A class for reading through assignments
-    """
-    
-    def __init__(self):
-        """
-        Initializes the Assignment attributes.
-        """
-        # Path
-        path = r"assignmentdatabase.csv"
-                
-        # read the CSV file from path
-        self.df = pd.read_csv(path)
-        
-        self.assignment = []
-        
-    
-    def get_course_name(self):
-        """
-        Gets the name of the course.
-        """
-        course_name = self.assignment["Subject"]
-        return course_name
-        
-    
-    def get_assignment_name(self):
-        """
-        Gets the name of the assignment.
-        """
-        assignment_name = self.assignment["Assignment"]
-        return assignment_name
-    
-    
-    def get_time_due(self):
-        """ 
-        Gets time that the assignment is due
-        """
-        due_date = self.assignment["Due Date"]
-        return due_date
-    
-    
-    def get_due_date(self):
-        """ 
-        Gets time that the assignment is due
-        """
-        time_due = self.assignment["Time Due"]
-        return time_due
-    
-    def get_weight(self):
-        """ 
-        Gets the weight of assignment
-        """
-        weight = self.assignment["Weight"]
-        return weight
-    
-    def get_assignment_type(self):
-        """ 
-        Gets assignment type
-        """
-        assignment_type = self.assignment["Type"]
-        return assignment_type
-        '''
-        
         
 class Status():
+    """
+    A class to calculate the status of each assignment
+    """
     
     def __init__(self):
         """
         Initializes the attributes of the status class.
+        
         """
         # Path
         path = r"assignmentdatabase.csv"
@@ -174,6 +112,9 @@ class Status():
 def main():
     """
     Retrieves and prints the status the assignment.
+    
+    Returns:
+        df_cond(df): list of columns to show
     """
     
     print("Upcoming Assignments:")
@@ -189,6 +130,7 @@ def main():
     
     df_cond = status_object.df[["Subject", "Assignment", "Time Due", "Due Date", "Weight", "days left", "difficulty"]]
     print(df_cond)
+    
     return df_cond
     
 
