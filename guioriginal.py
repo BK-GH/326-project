@@ -7,6 +7,7 @@ from tkinter import ttk, filedialog, messagebox
 
 import re
 import department_info
+import schedule
 
 LARGE_FONT= ("Verdana", 18)
 
@@ -14,7 +15,7 @@ LARGE_FONT= ("Verdana", 18)
 
 class Main(tk.Tk):
     """
-    A class for opening main window 
+    A class for opening Main window 
 
     Attributes:
         tk.Tk(): passes in the root of Tkinter
@@ -27,6 +28,9 @@ class Main(tk.Tk):
         Args:
             args(): passes varible to function
             kwargs(): keyword arguments that passes varible to function
+            
+        Side effects:
+            creates frame
         """
         
         tk.Tk.__init__(self, *args, **kwargs)
@@ -50,15 +54,15 @@ class Main(tk.Tk):
         
     def show_frame(self, cont):
         """
-        Method to show frame of .
+        Method to show frame.
         
         Args:
-            args(): passes varible to function
-            kwargs(): keyword arguments that passes varible to function
+            cont(): each frame
         """
         
         frame = self.frames[cont]
         frame.tkraise()   
+
 
 def remove_punctuation(word):
     """
@@ -67,46 +71,47 @@ def remove_punctuation(word):
     Args: 
         word(str): a word that may contain some punctuation.
 
+    Side effects:
+        Modifies characters to lowercase
+    
     Returns:
-        new_word(str): the same word as word but without punctuation.
+        alphanumeric_string(str): the same word as word but without punctuation.
     """
     
-    '''Removing the non alphanumeric characters and converting the string to the lower string'''
     alphanumeric_string  = "".join(e for e in word if e.isalnum()) 
     
     alphanumeric_string = alphanumeric_string.lower() 
     
     return alphanumeric_string
 
+
 class Welcomewindow(tk.Frame):
-    
+    """
+    A class for opening Welcomewindow page.
+
+    Attributes:
+        tk.Frame(): inherits tkinter frame attributes
+    """
     
     def __init__(self, parent, controller):
         """
         Initializes Welcomewindow class.
         
         Args:
-            args(): passes varible to function
-            kwargs(): keyword arguments that passes varible to function
+            parent(): 
+            controller(): pulls alistofclasses from Main class
+            
+        Side effects:
+            creates buttons and list boxes for welcome window frame
         """
         
-        tk.Frame.__init__(self,parent) #start of tk_example2.py code
+        tk.Frame.__init__(self, parent) #start of tk_example2.py code
         
         self.canvas = tk.Canvas(self, height = 700, width = 800)
         self.canvas.pack()
-        
-        #label = tk.Label(self, text="YERRRRRRR", font=LARGE_FONT)
-        #label.pack(pady=10,padx=10)
+
         self.classlistvar = tk.StringVar()
         self.enrolledlistvar = tk.StringVar() 
-
-
-
-        
-        #OG code (modified)      
-        #   list variables
-        #self.classlistvar = tk.StringVar()
-        #self.enrolledlistvar = tk.StringVar() 
                
         #   frame of the title label
         self.titleFrame = tk.Frame(self, bg = '#80c1ff', bd = 5)
@@ -116,11 +121,11 @@ class Welcomewindow(tk.Frame):
         self.titleLabel = tk.Label(self.titleFrame, text = "Welcome to the INST python planner \n Highlight your Class IDs below and press 'add'")   
         self.titleLabel.place(relwidth = 1, relheight = 1)   
         
-        #   list of available classes
+        #   list of available items
         self.classlist = tk.Listbox(self, height=5, listvariable = self.classlistvar, selectmode = 'multiple')
         self.classlist.place(x = 300, y = 350, relwidth = .24, relheight = .30, anchor = 'e')    
 
-        #   user selected classes
+        #   user selected items
         self.enrolledlist = tk.Listbox(self, height=5, listvariable = self.enrolledlistvar, selectmode = 'multiple')
         self.enrolledlist.place(x = 500, y = 350, relwidth = .24, relheight = .30, anchor = 'w')
         
@@ -132,26 +137,25 @@ class Welcomewindow(tk.Frame):
         self.deleteButton = tk.Button(self, text = "delete", command = lambda:  self.delete_classes(True))
         self.deleteButton.place(x = 370, y = 350, relwidth = 0.08, relheight = 0.05)
         
-        #   inserts default values from classes function into the classlistbox
-        self.classes()
+        #   inserts default values from items function into the classlistbox
+        self.items()
         
         button = tk.Button(self, text="Department Info", #sends user to department info page
                             command=lambda: [controller.show_frame(Departmentinfo), self.getdepartmentinfo(self.enrolledlistvar, controller)])
         button.place(x = 320, y = 500, relwidth = 0.2, relheight = 0.05)
 
-        button2 = tk.Button(self, text="Get Schedule", #sends user to get schedule page
-                            command=lambda: controller.show_frame(Getschedule))
-        button2.place(x = 320, y = 550, relwidth = 0.2, relheight = 0.05)
+        self.button2 = tk.Button(self, text="Get Schedule", #sends user to get schedule page
+                            command=lambda: [controller.show_frame(Getschedule), self.getdepartmentinfo(self.enrolledlistvar, controller)])
+        self.button2.place(x = 320, y = 550, relwidth = 0.2, relheight = 0.05)
                 
 
 
-    def classes(self):
+    def items(self):
         """
         A method to set class values to list
-
-        Args:
-            classlistvar(list): list of classes
-            enrolledlistvar(list): empty list to pass in list of classes
+        
+        Side effects:
+            sets values to attributes
         """
         
         self.classlistvar.set(value = (301,311,314,326,335)) #    you can also use value = ['A', 'B', 'C']
@@ -160,13 +164,13 @@ class Welcomewindow(tk.Frame):
 
     def get_classes(self, only_one_item=False):
         """ 
-        A method that gets a class from the enrolled list.
+        Gets a class from the enrolled list.
         
         Args:
             only_one_item(bool): set to false, can only select one item
 
         Side effects:
-            Alters enrolled list variable
+            Alters enrolledlistvar
             
         Returns:
             None: if there is no selection
@@ -198,13 +202,13 @@ class Welcomewindow(tk.Frame):
 
     def delete_classes(self, only_one_item=False):
         """ 
-        A method that deletes a class from the enrolled list.
+        Deletes a class from the enrolled list.
         
         Args:
             only_one_item(bool): set to false, can only select one item
 
         Side effects:
-            Alters enrolled list variable
+            Alters enrolledlistvar
             
         Returns:
             None: if there is no selection
@@ -237,24 +241,28 @@ class Welcomewindow(tk.Frame):
     
     
     def getdepartmentinfo(self, eclist, controller):
+        """
+        Creates separate strings of selected values into a list
         
-        #for i in eclist.get(): 
-            #print(f"INST {int}")
-           # print(i)
-        #print(f"INST {eclist.get().replace("()")}")
-        #print(department_info.main(f"INST {eclist.get()}"))
-        #print(remove_punctuation(eclist.get()))
+        Args:
+            eclist(string): contains the selected values along with extra punctuation
+            controller(): pulls alistofclasses from Main class
+            
+        Side effects:
+            Splits eclist into separate strings and appends to a list with correct name
+        """
+        
         alist = eclist.get().split()
-        #print(alist)
         for element in alist:
             controller.alistofclasses.append(f"INST {remove_punctuation(element)}")
-        #print(alistofclasses)
-
 
 
 class Departmentinfo(tk.Frame):
     """
-    A class for opening the department info page 
+    A class for opening Departmentinfo page.
+
+    Attributes:
+        tk.Frame(): inherits tkinter frame attributes
     """
     
     def __init__(self, parent, controller):
@@ -262,72 +270,197 @@ class Departmentinfo(tk.Frame):
         Initializes Departmentinfo class.
         
         Args:
-            args(): passes varible to function
-            kwargs(): keyword arguments that passes varible to function
+            parent(): 
+            controller(): pulls alistofclasses from Main class
+            
+        Side effects:
+            creates buttons and list boxes for Departmentinfo frame
         """
         
+        self.print_records = ""
         tk.Frame.__init__(self, parent)
         #   frame of the title label
         self.DItitleFrame = tk.Frame(self, bg = '#80c1ff', bd = 5)
-        self.DItitleFrame.place(relx = 0.5, rely = 0.1, relwidth = 0.75, relheight = 0.1, anchor = 'n')
+        self.DItitleFrame.place(relx = 0.5, rely = 0.1, relwidth = 0.75, relheight = 0.08, anchor = 'n')
 
         #   title label
         self.DItitleLabel = tk.Label(self.DItitleFrame, text = "INST Department Information")   
         self.DItitleLabel.place(relwidth = 1, relheight = 1) 
         
-        button1 = tk.Button(self, text="Back to Welcome Window",
-                            command=lambda: controller.show_frame(Welcomewindow))
-        button1.pack()
+        self.query_label = tk.Label(self, text = "")
+        self.query_label.place(x = 400, y = 700, relwidth = .4, relheight = .75, anchor = 's')
+        
+        self.button1 = tk.Button(self, text="Back to Welcome Window",
+                            command=lambda: [controller.show_frame(Welcomewindow), self.clear_list(controller)])
+        self.button1.pack()
 
-        button2 = tk.Button(self, text="Get Schedule",
+        self.button2 = tk.Button(self, text="Get Schedule",
                             command=lambda: controller.show_frame(Getschedule))
-        button2.pack()
+        self.button2.pack()
         
-        theclasses = department_info.main(i for i in controller.alistofclasses)
-        print(theclasses)
-        
-        button3 = tk.Button(self, text="See department info",
+        self.button3 = tk.Button(self, text="See Department Info",
                             command=lambda: self.call_classes(controller.alistofclasses))
-        button3.pack()
+        self.button3.pack()
         
-    def call_classes(self, listofclasses):
-     
-        theclasses = department_info.main(i for i in listofclasses)
+        self.delete_button = tk.Button(self, text = "Clear List",
+                                       command=lambda: self.delete_list())
+        self.delete_button.pack()
         
-        print(theclasses)
         
-        print_records = ""
-        for classes in theclasses:
-            print_records += str(classes) + "\n\n"
-        query_label = tk.Label(self, text = print_records)
-        query_label.place(x = 400, y = 700, relwidth = .4, relheight = .75, anchor = 's')
+    def delete_list(self):
+        """
+        Gets rid of text and label.
+    
+        Side effects:
+            enables See Department Info button to clear to normal
+        """
+        self.query_label.destroy()
+        self.button3['state'] = 'normal'
+        self.print_records = ""
+    
+    
+    def call_classes(self, classesfrombutton):
+        """
+        Pulls classes from selected values.
+    
+        Args:
+            classesfrombutton(list): list of classes chosen
+            
+        Side effects():
+            Disables the See Department Info button after it is clicked
+            Prints text from label
+        """
+        
+        theschedule = department_info.main(i for i in classesfrombutton)
+        
+        #print(theschedule)
+        
+        for items in theschedule:
+            self.print_records += str(items) + "\n\n"
+        
+        self.query_label = tk.Label(self, text = self.print_records)
+        self.query_label.place(x = 400, y = 700, relwidth = .4, relheight = .75, anchor = 's')
+        self.button3['state'] = 'disabled'
         
     
- 
-
-    
+    def clear_list(self, controller):
+        """
+        Clears controller.alistofclasses.
+        
+        Args:
+            controller(): pulls alistofclasses from Main class
+            
+        Side effects:
+            Sets self.print_records to an empty string
+        """
+        controller.alistofclasses.clear()
+        self.print_records = ""
+        #self.query_label = tk.Label(self, text = "")
+        #self.query_label.place(x = 400, y = 700, relwidth = .4, relheight = .75, anchor = 's')
+        
+        
 class Getschedule(tk.Frame):
+    """
+    A class for opening Getschedule page.
+
+    Attributes:
+        tk.Frame(): inherits tkinter frame attributes
+    """
     
     def __init__(self, parent, controller):
+        """
+        Initializes Getschedule class.
+        
+        Args:
+            parent(): 
+            controller(): pulls alistofclasses from Main class
+            
+        Side effects:
+            creates buttons and list boxes for Getschedule frame
+        """
         
         tk.Frame.__init__(self, parent)
+        
+        self.print_schedule = ""
+        
         #   frame of the title label
         self.GStitleFrame = tk.Frame(self, bg = '#80c1ff', bd = 5)
         self.GStitleFrame.place(relx = 0.5, rely = 0.1, relwidth = 0.75, relheight = 0.1, anchor = 'n')
         #   title label
         self.GStitleLabel = tk.Label(self.GStitleFrame, text = "Here is your INST schedule")   
         self.GStitleLabel.place(relwidth = 1, relheight = 1)   
+        
+        self.show_schedule = tk.Label(self, text = "")
+        self.show_schedule.place(x = 400, y = 700, relwidth = .4, relheight = .75, anchor = 's')
 
-        button1 = tk.Button(self, text="Back to Welcome Window",
-                            command=lambda: controller.show_frame(Welcomewindow))
-        button1.pack()
+        self.button1 = tk.Button(self, text="Back to Welcome Window",
+                            command=lambda: [controller.show_frame(Welcomewindow), self.clear_list(controller)])
+        self.button1.pack()
 
-        button2 = tk.Button(self, text="Department Info",
+        self.button2 = tk.Button(self, text="Department Info",
                             command=lambda: controller.show_frame(Departmentinfo))
-        button2.pack()
+        self.button2.pack()
+        
+        self.button3 = tk.Button(self, text = "Get Your Schedule",
+                            command=lambda: self.get_schedule(controller.alistofclasses))
+        self.button3.pack()
+        
+        self.delete_button = tk.Button(self, text = "Clear List",
+                                       command=lambda: self.delete_list(controller.alistofclasses))
+        self.delete_button.pack()
+        
+        
+    def delete_list(self, controller):
+        """
+        Gets rid of text and label.
+    
+        Side effects:
+            enables See Department Info button to clear to normal
+        """
+        
+        self.show_schedule.destroy()
+        self.button3['state'] = 'normal'
+        self.print_schedule = ""
+        
+    def get_schedule(self, thelist):
+        """
+        Pulls classes from selected values.
+    
+        Args:
+            thelist(list): list of classes chosen
+            
+        Side effects():
+            Disables the See Department Info button after it is clicked
+            Prints text from label
+        """
+        
+        theschedule = schedule.main(i for i in thelist)
+        
+        #print(theschedule)
+        
+        for items in theschedule:
+            self.print_schedule += str(items) + "\n\n"
+        
+        self.show_schedule = tk.Label(self, text = self.print_schedule)
+        self.show_schedule.place(x = 400, y = 700, relwidth = .4, relheight = .75, anchor = 's')
+        self.button3['state'] = 'disabled'
+        
+        
+    def clear_list(self, controller):
+        """
+        Clears controller.alistofclasses.
+        
+        Args:
+            controller(): pulls alistofclasses from Main class
+            
+        Side effects:
+            Sets self.print_records to an empty string
+        """
+        
+        controller.alistofclasses.clear()
+        self.print_schedule = ""
 
 
 if __name__=="__main__":
     app = Main()
     app.mainloop()
-    
