@@ -32,3 +32,8 @@ Krunal. (2020). How To Convert Datetime To String In Python. Retrieved from
 https://appdividend.com/2020/01/21/how-to-convert-datetime-to-string-in-python/
 
 For our project, we needed to subtract two dates to calculate days left for schedule.py. When we tried to subtract the date for today and the dates under due date, we encountered a problem. The current days was not formatted the way we wanted it to be, so the output of days left ended up having a lot of stuff other than how many days left. To solve this problem we needed to find a way that could change the datetime format for the current day. We found just that in the article above. In that article, it tells us to use the strfttime function of the datetime module. Knowing this, we converted the datetime object of the current day the user was on to Year-Month-Day instead of Year-Month-Day-Hour-Minute-Second. This changed the outputs of the days due column to what we wanted it to be.  
+
+StackOverflow(2017) Moving from one listbox to another tkinter
+https://stackoverflow.com/questions/43626935/moving-from-one-listbox-to-another-tkinter
+
+On the Welcome window of our GUI, we presened the user with two listboxes. The one on the left had 5 class IDs for the user to choose from and add to the right listbox. Any IDs in the right list box were then passed on to the appropriate functions for obtaining the schedule. This stackoverflow solution helped us move class IDs between the listboxes.
