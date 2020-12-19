@@ -5,13 +5,25 @@ This repository is for our INST 326 Final Project.
   Our project is an assignment tracker created for students in order to keep track of upcoming assignments and due dates. The purpose of this project is to allow students to better time manage their coursework since courses are all online. It is harder to keep track of assignments and due dates since there is no face to face interactions with students and professors.
 
 # How to run the program:
-  Navigate to the directory on where the python files and csv files are located at. Make sure all the files are in the same directory. Once you are in Visual Studio or the command prompt, navigate to where the directory is located. When you have navigated to the correct directory, type in python3 guioriginal.py to run the program.
+
+Make sure to install pandas, tkinter, Tkinter, datetime, re
+
+These are the commands you can use to install these modules:
+
+pip3 install pandas
+pip3 install tkinter
+pip3 install Tkinter
+pip3 install datetime
+pip3 install re
+
+These modules are already imported for use in our scripts.
+
+Once these modules are installed, navigate to the directory on where the python files and csv files are located at. Make sure all the files are saved in the same directory. Once you are in Visual Studio or the command prompt, navigate to where the directory is located. When you have navigated to the correct directory, type in python3 guioriginal.py to run the program. A separate screen will pop up prompting the user to select an INST class and add it from the left listbox to the right listbox. More info on how to use the program and how to understand the output is below.
 
 # Documentation & Understanding the output:
-  Our program relies heavily on our gui file. The gui file is runned as explained above and python brings the user to our homepage (Welcome Window). Once the user has arrived at the Welcome Window, the user can use our two listboxes to add in the classes that he/she is enrolled in. Once the user has added in the classes, he/she can then choose to either see the department info or to see the schedule for the selected classes 
-  If the user chooses to click on department info, the user can then choose to select more options. This time the user can select to go back to the Welcome Screen, go to the schedule screen, get the department info, or clear department info. If the user chooses to click on get the department info, the user will see the department info of the selected classes pop up. The user will then have to click on the clear department info, if the user does not he/she won’t be able to get another department info.
-  If the user chooses to click on schedule, the user can then choose to select more options. This time the user can select to go back to the Welcome Screen, go to the department info screen, get the schedule, or clear schedule. If the user chooses to click on get the schedule, the user will see the schedule of the selected classes pop up. The user will then have to click on the clear schedule, if the user does not he/she won’t be able to get another schedule.
-
+  Our program relies heavily on our gui file. The gui file is runned as explained above and python brings the user to our homepage (Welcome Window). Once the user has arrived at the Welcome Window, the user can use our two listboxes to add in the classes that he/she is enrolled in. The user can click on one class, make sure it is highlighted, and click 'add' to transfer it to the right listbox. The user can also delete classes from the right listbox by selecting the class, make sure it is highlighted, and click on 'delete' to remove the class from the right listbox. Once the user has added in the classes, he/she can then choose to either click the "Department Info" or "Get Schedule" button. 
+  If the user chooses to click on "Department Info", the user is transferred to a different page where they can then choose to select more options. This time the user can select to go back to the Welcome Screen, go to the schedule screen, get the department info, or clear department info. If the user chooses to click on "See Department Info", the user will see the department info of the selected classes pop up. The user will then have to click on the "Clear List", to clear the output on the screen. If the user does not he/she won’t be able to click on the "See Department Info" button again.
+  If the user chooses to click on "Get Schedule", the user is transferred to a different page and can then choose to select more options. This time the user can select to go back to the Welcome Window, go to the "Department Info" screen, "Get Your Schedule", or "Clear List". If the user chooses to click on "Get Your Schedule" button, the user will see the schedule of the selected classes pop up. The user will then have to click on the "Clear List" button to clear the output. If the user does not he/she won’t be able to click on the "Get Your Schedule" button again. 
 
 
 # Bibliography
