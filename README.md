@@ -32,6 +32,7 @@ Once these modules are installed, navigate to the directory on where the python 
   
   If the user chooses to click on "Get Schedule", the user is transferred to a different page and can then choose to select more options. This time the user can select to go back to the Welcome Window, go to the "Department Info" screen, "Get Your Schedule", or "Clear List". If the user chooses to click on "Get Your Schedule" button, the user will see the schedule of the selected classes pop up. The user will then have to click on the "Clear List" button to clear the output. If the user does not he/she won’t be able to click on the "Get Your Schedule" button again. 
 
+  
 
 # Bibliography
 References:
