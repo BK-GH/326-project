@@ -1,8 +1,16 @@
+"""
+Final Project
+Group 2: Assigment Tracker
+Brook Goitom | Emmanuel Sitaniapessy | Jenny Dang | Nicholas Wang
+INST 326
+Professor Cruz
+"""
+
 try:
     import tkinter as tk
 except ImportError:
     import Tkinter as tk
-import pandas as pd
+
 from tkinter import ttk, filedialog, messagebox
 
 import re
@@ -11,7 +19,6 @@ import schedule
 
 LARGE_FONT= ("Verdana", 18)
 
-#alistofclasses = []
 
 class Main(tk.Tk):
     """
@@ -34,8 +41,8 @@ class Main(tk.Tk):
         """
         
         tk.Tk.__init__(self, *args, **kwargs)
-        self.alistofclasses = []
-        #now starts tk_example2.py
+        self.user_classes = [] #holds the INST classes the user selects
+        
         container = tk.Frame(self)
 
         container.pack(side="top", fill="both", expand = True)
@@ -99,13 +106,13 @@ class Welcomewindow(tk.Frame):
         
         Args:
             parent(): 
-            controller(): pulls alistofclasses from Main class
+            controller(): pulls user_classes from Main class
             
         Side effects:
             creates buttons and list boxes for welcome window frame
         """
         
-        tk.Frame.__init__(self, parent) #start of tk_example2.py code
+        tk.Frame.__init__(self, parent) 
         
         self.canvas = tk.Canvas(self, height = 700, width = 800)
         self.canvas.pack()
@@ -114,7 +121,7 @@ class Welcomewindow(tk.Frame):
         self.enrolledlistvar = tk.StringVar() 
                
         #   frame of the title label
-        self.titleFrame = tk.Frame(self, bg = '#80c1ff', bd = 5)
+        self.titleFrame = tk.Frame(self, bg = 'red', bd = 5)
         self.titleFrame.place(relx = 0.5, rely = 0.1, relwidth = 0.75, relheight = 0.1, anchor = 'n')
         
         #   title label
@@ -158,7 +165,7 @@ class Welcomewindow(tk.Frame):
             sets values to attributes
         """
         
-        self.classlistvar.set(value = (301,311,314,326,335)) #    you can also use value = ['A', 'B', 'C']
+        self.classlistvar.set(value = (301,311,314,326,335))
         self.enrolledlistvar.set(value = ())
     
 
@@ -246,15 +253,16 @@ class Welcomewindow(tk.Frame):
         
         Args:
             eclist(string): contains the selected values along with extra punctuation
-            controller(): pulls alistofclasses from Main class
+            controller(): pulls user_classes from Main class
             
         Side effects:
             Splits eclist into separate strings and appends to a list with correct name
         """
         
-        alist = eclist.get().split()
+        alist = eclist.get().split() #splits the input from the enrolled listbox and creates a list of the values
         for element in alist:
-            controller.alistofclasses.append(f"INST {remove_punctuation(element)}")
+            #calls remove_punctuation to strip the string of punctuation
+            controller.user_classes.append(f"INST {remove_punctuation(element)}")
 
 
 class Departmentinfo(tk.Frame):
@@ -271,37 +279,43 @@ class Departmentinfo(tk.Frame):
         
         Args:
             parent(): 
-            controller(): pulls alistofclasses from Main class
+            controller(): pulls user_classes from Main class
             
         Side effects:
             creates buttons and list boxes for Departmentinfo frame
         """
         
-        self.print_records = ""
+        self.print_records = "" #will hold the text that is to be displayed on the page
+        
         tk.Frame.__init__(self, parent)
         #   frame of the title label
-        self.DItitleFrame = tk.Frame(self, bg = '#80c1ff', bd = 5)
+        self.DItitleFrame = tk.Frame(self, bg = 'red', bd = 5)
         self.DItitleFrame.place(relx = 0.5, rely = 0.1, relwidth = 0.75, relheight = 0.08, anchor = 'n')
 
         #   title label
         self.DItitleLabel = tk.Label(self.DItitleFrame, text = "INST Department Information")   
         self.DItitleLabel.place(relwidth = 1, relheight = 1) 
         
+        #   department info label
         self.query_label = tk.Label(self, text = "")
         self.query_label.place(x = 400, y = 700, relwidth = .4, relheight = .75, anchor = 's')
         
+        #   this button takes user back to welcome window
         self.button1 = tk.Button(self, text="Back to Welcome Window",
                             command=lambda: [controller.show_frame(Welcomewindow), self.clear_list(controller)])
         self.button1.pack()
 
+        #   takes user to the get schedule page
         self.button2 = tk.Button(self, text="Get Schedule",
                             command=lambda: controller.show_frame(Getschedule))
         self.button2.pack()
         
+        #   executes command to display the department info for each class
         self.button3 = tk.Button(self, text="See Department Info",
-                            command=lambda: self.call_classes(controller.alistofclasses))
+                            command=lambda: self.call_classes(controller.user_classes))
         self.button3.pack()
         
+        #   clears the text output on the page
         self.delete_button = tk.Button(self, text = "Clear List",
                                        command=lambda: self.delete_list())
         self.delete_button.pack()
@@ -315,7 +329,7 @@ class Departmentinfo(tk.Frame):
             enables See Department Info button to clear to normal
         """
         self.query_label.destroy()
-        self.button3['state'] = 'normal'
+        self.button3['state'] = 'normal' #resets the button status so the user can click on the "See Department Info" button again
         self.print_records = ""
     
     
@@ -330,34 +344,32 @@ class Departmentinfo(tk.Frame):
             Disables the See Department Info button after it is clicked
             Prints text from label
         """
-        
-        theschedule = department_info.main(i for i in classesfrombutton)
-        
-        #print(theschedule)
+        #holds info from main class in department_info.py for each class the user selected
+        theschedule = department_info.main(i for i in classesfrombutton) 
         
         for items in theschedule:
+            #iterating through each element and adding it to a string
             self.print_records += str(items) + "\n\n"
         
+        #   displays the information for the department info
         self.query_label = tk.Label(self, text = self.print_records)
         self.query_label.place(x = 400, y = 700, relwidth = .4, relheight = .75, anchor = 's')
-        self.button3['state'] = 'disabled'
+        self.button3['state'] = 'disabled' #disables button so the user can only click it once before clicking the "clear list" button
         
     
     def clear_list(self, controller):
         """
-        Clears controller.alistofclasses.
+        Clears controller.user_classes.
         
         Args:
-            controller(): pulls alistofclasses from Main class
+            controller(): pulls user_classes from Main class
             
         Side effects:
             Sets self.print_records to an empty string
         """
-        controller.alistofclasses.clear()
-        self.print_records = ""
-        #self.query_label = tk.Label(self, text = "")
-        #self.query_label.place(x = 400, y = 700, relwidth = .4, relheight = .75, anchor = 's')
-        
+        controller.user_classes.clear() #clears the list of classes generated from clicking on the department info or get schedule button on the welcome window
+        self.print_records = "" #resets value to an empty string
+
         
 class Getschedule(tk.Frame):
     """
@@ -373,7 +385,7 @@ class Getschedule(tk.Frame):
         
         Args:
             parent(): 
-            controller(): pulls alistofclasses from Main class
+            controller(): pulls user_classes from Main class
             
         Side effects:
             creates buttons and list boxes for Getschedule frame
@@ -381,32 +393,33 @@ class Getschedule(tk.Frame):
         
         tk.Frame.__init__(self, parent)
         
-        self.print_schedule = ""
+        self.print_schedule = "" #holds the text of the class schedule
         
         #   frame of the title label
-        self.GStitleFrame = tk.Frame(self, bg = '#80c1ff', bd = 5)
+        self.GStitleFrame = tk.Frame(self, bg = 'red', bd = 5)
         self.GStitleFrame.place(relx = 0.5, rely = 0.1, relwidth = 0.75, relheight = 0.1, anchor = 'n')
         #   title label
         self.GStitleLabel = tk.Label(self.GStitleFrame, text = "Here is your INST schedule")   
         self.GStitleLabel.place(relwidth = 1, relheight = 1)   
-        
-        #self.textbox = tk.Text(self, height = 30, width = 30)
-        #self.textbox.place(x = 400, y = 700, relwidth = .4, relheight = .75, anchor = 's')
 
+        #   takes user back to welcome window and clears the user selected list
         self.button1 = tk.Button(self, text="Back to Welcome Window",
                             command=lambda: [controller.show_frame(Welcomewindow), self.clear_list(controller)])
         self.button1.pack()
 
+        #   takes user to department info page
         self.button2 = tk.Button(self, text="Department Info",
                             command=lambda: controller.show_frame(Departmentinfo))
         self.button2.pack()
         
+        #   executes command to get the schedule for the selected classes
         self.button3 = tk.Button(self, text = "Get Your Schedule",
-                            command=lambda: self.get_schedule(controller.alistofclasses))
+                            command=lambda: self.get_schedule(controller.user_classes))
         self.button3.pack()
         
+        #   clears the list of user selected classes
         self.delete_button = tk.Button(self, text = "Clear List",
-                                       command=lambda: self.delete_list(controller.alistofclasses))
+                                       command=lambda: self.delete_list(controller.user_classes))
         self.delete_button.pack()
         
         
@@ -418,8 +431,8 @@ class Getschedule(tk.Frame):
             enables See Department Info button to clear to normal
         """
         
-        self.show_schedule.destroy()
-        self.button3['state'] = 'normal'
+        self.textbox.destroy()
+        self.button3['state'] = 'normal' #resets status of button so the user can click on the "Get Your Schedule" button again
         self.print_schedule = ""
         
     def get_schedule(self, thelist):
@@ -434,80 +447,52 @@ class Getschedule(tk.Frame):
             Prints text from label
         """
         
-        theschedule = schedule.main(i for i in thelist)
-        
-        #print(theschedule)
+        theschedule = schedule.main(i for i in thelist) #holds the information of each class as dataframes in a list
         
         for items in theschedule:
-            self.print_schedule += str(items) + "\n\n"
+            #iterating through each dataframe
+            self.print_schedule += "\n" + "Subject" + " " + "Assignment" + " " + "Time Due" + " " + "Due Date" + " " + "Weight" + " " + "days left" + " " + "difficulty" + "\n\n"
+            
+            for i,rows in items.iterrows():
+                #iterating through each row
+                self.print_schedule += (str(rows["Subject"]) + " " + str(rows["Assignment"]) + " " + str(rows["Time Due"]) + " " + str(rows["Due Date"])
+                      + " " + str(rows["Weight"]) + " " + self.days_only(str(rows["days left"])) + " difficulty:" + str(rows["difficulty"])) + "\n"
         
-        
-        """     Treeview
-        self.schedtree = ttk.Treeview(self)
-        self.schedtree['columns'] = ("Subject","Assignment","Time Due","Due Date","Weight","Type")
-        
-        self.schedtree.column("#0", width = 0)
-        self.schedtree.column("Subject", anchor = 'w', width = 120)
-        self.schedtree.column("Assignment", anchor = 'w', width = 120)
-        self.schedtree.column("Time Due", anchor = 'w', width = 120)
-        self.schedtree.column("Due Date", anchor = 'w', width = 120)
-        self.schedtree.column("Weight", anchor = 'w', width = 120)
-        self.schedtree.column("Type", anchor = 'w', width = 120)
-        
-        self.schedtree.heading("#0", text = "")
-        self.schedtree.heading("Subject", text = "Subject", anchor = 'w')
-        self.schedtree.heading("Assignment", text = "Assignment", anchor = 'w')
-        self.schedtree.heading("Time Due", text = "Time Due", anchor = 'w')
-        self.schedtree.heading("Due Date", text = "Due Date", anchor = 'w')
-        self.schedtree.heading("#Weight", text = "Weight", anchor = 'w')
-        self.schedtree.heading("Type", text = "Type", anchor = 'w')
-        
-        self.schedtree.insert(parent = '', index = 'end', iid = 0, text = "", values = self.print_schedule)
-        """
-        
-        """ Works incorrectly
-        testbox = tk.Listbox(self)
-        for x,y in enumerate(self.print_schedule):
-            testbox.insert(x+1,y)
-        testbox.place(x = 400, y = 700, relwidth = .6, relheight = .75, anchor = 's')
-        """
-        
-        self.textbox = tk.Text(self, height = 30, width = 30)
+        #   will display the schedule of the user selected classes
+        self.textbox = tk.Text(self, height = 30, width = 50)
         self.textbox.place(x = 400, y = 700, relwidth = .8, relheight = .75, anchor = 's')
         self.textbox.insert('end', self.print_schedule)
-
-
-        """ Works incorrectly
-        self.sched = tk.StringVar(self, value= self.print_schedule)
-        self.schedbox = tk.Listbox(self, listvariable = self.sched)
-        self.schedbox.place(x = 400, y = 700, relwidth = .6, relheight = .75, anchor = 's')
-        """
-            
-        #self.schedbox.insert(self.schedbox, self.print_schedule)
         
-            
-        #self.scrollbar = tk.Scrollbar(self, orient = 'vertical')
-        #self.show_schedule = tk.Text(self, text = self.print_schedule, yscrollcommand = self.scrollbar.set)
-        #self.scrollbar.config(self, command = self.show_schedule.yview)
-        #self.scrollbar.pack(self, side = 'RIGHT', fill = 'Y')
-        #self.show_schedule.place(x = 400, y = 700, relwidth = .4, relheight = .75, anchor = 's')
-        
-        self.button3['state'] = 'disabled'
+        self.button3['state'] = 'disabled' #disables button so the user cannot click on it more than once before clearing the output
         
         
     def clear_list(self, controller):
         """
-        Clears controller.alistofclasses.
+        Clears controller.user_classes.
         
         Args:
-            controller(): pulls alistofclasses from Main class
+            controller(): pulls user_classes from Main class
             
         Side effects:
             Sets self.print_records to an empty string
         """
         
-        controller.alistofclasses.clear()
+        controller.user_classes.clear()
         self.print_schedule = ""
+        
+    def days_only(self, datetime):
+        """
+        Retrieves the days left only from the line.
+        
+        Args:
+            datetime(str): the days left and the hours for each assignment.
+            
+        Returns:
+            days_left.group(1)(str): the days left for the assignment.
+        """
+        days_left = re.search(r"([-]?\w+\sdays)", datetime)
+        if days_left:
+            return (f"{days_left.group(1)} left")
 
 
 if __name__=="__main__":

@@ -1,3 +1,11 @@
+"""
+Final Project
+Group 2: Assigment Tracker
+Brook Goitom | Emmanuel Sitaniapessy | Jenny Dang | Nicholas Wang
+INST 326
+Professor Cruz
+"""
+
 import pandas as pd
 
 class DepartmentInfo:
@@ -106,8 +114,7 @@ def main(class_list):
     Args:
         class_list(list): list of selected classes
     """
-    #Prints out department information for selected classes
-    #print("Department Info: \n")
+    
     #Loop through each class of the selected classes
     alist = []
     for class_name in class_list:

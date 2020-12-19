@@ -1,5 +1,6 @@
 """
-Project: Assignment Tracker
+Final Project
+Group 2: Assigment Tracker
 Brook Goitom | Emmanuel Sitaniapessy | Jenny Dang | Nicholas Wang
 INST 326
 Professor Cruz
@@ -171,11 +172,11 @@ def main(class_list):
         #Append the new dataframe to the list
         class_dataframe.append(df_cond)
     
-    #print(class_dataframe)
     #Return that list
     return class_dataframe
     
 
 if __name__ =="__main__":
-    class_list = ["INST301", "INST311", "INST314", "INST326", "INST335"]
+    class_list = ["INST 301", "INST 311", "INST 314", "INST 326", "INST 335"]
+    
     main(class_list)
