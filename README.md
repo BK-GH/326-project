@@ -11,10 +11,15 @@ Make sure to install pandas, tkinter, Tkinter, datetime, re
 These are the commands you can use to install these modules:
 
 pip3 install pandas
+
 pip3 install tkinter
+
 pip3 install Tkinter
+
 pip3 install datetime
+
 pip3 install re
+
 
 These modules are already imported for use in our scripts.
 
