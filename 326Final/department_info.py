@@ -1,7 +1,7 @@
 """
 Final Project
 Group 2: Assigment Tracker
-Brook Goitom | Emmanuel Sitaniapessy | Jenny Dang | Nicholas Wang
+B**** ****** | Emmanuel Sitaniapessy | Jenny Dang | Nicholas Wang
 INST 326
 Professor Cruz
 """
